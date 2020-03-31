@@ -1,5 +1,5 @@
 {
-    "src_file": "@@shortname@@.bs",
+    "src_file": "@@bs@@.bs",
     "type": "bikeshed",
     "params": {
         "force": 1,

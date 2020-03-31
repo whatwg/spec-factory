@@ -1,13 +1,13 @@
-remote: @@shortname@@.bs
-	curl https://api.csswg.org/bikeshed/ -f -F file=@@@shortname@@.bs > @@shortname@@.html -F md-Text-Macro="SNAPSHOT-LINK LOCAL COPY"
+remote: @@bs@@.bs
+	curl https://api.csswg.org/bikeshed/ -f -F file=@@@bs@@.bs > @@bs@@.html -F md-Text-Macro="SNAPSHOT-LINK LOCAL COPY"
 
-local: @@shortname@@.bs
-	bikeshed spec @@shortname@@.bs @@shortname@@.html --md-Text-Macro="SNAPSHOT-LINK LOCAL COPY"
+local: @@bs@@.bs
+	bikeshed spec @@bs@@.bs @@bs@@.html --md-Text-Macro="SNAPSHOT-LINK LOCAL COPY"
 
-deploy: @@shortname@@.bs
+deploy: @@bs@@.bs
 	curl --remote-name --fail https://resources.whatwg.org/build/deploy.sh
 	bash ./deploy.sh
 
-review: @@shortname@@.bs
+review: @@bs@@.bs
 	curl --remote-name --fail https://resources.whatwg.org/build/review.sh
 	bash ./review.sh
