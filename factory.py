@@ -78,6 +78,9 @@ def main():
     for workstream in db["workstreams"]:
         for standard in workstream["standards"]:
             shortname = href_to_shortname(standard["href"])
+            # Don't update repos we don't yet support
+            if shortname in ("html", "streams"):
+                continue
             variables = {
                 "shortname": shortname,
                 "h1": standard["name"],
