@@ -79,6 +79,7 @@ def main():
         for standard in workstream["standards"]:
             shortname = href_to_shortname(standard["href"])
             # Don't update repos we don't yet support
+            # https://github.com/whatwg/spec-factory/issues/1
             if shortname in ("html", "streams"):
                 continue
             variables = {
