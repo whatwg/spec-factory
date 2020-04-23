@@ -69,8 +69,10 @@ def update(templates, variables):
         write_file(file, files[file])
         subprocess.run(["git", "add", file], capture_output=True)
     if b"Changes to be committed" in subprocess.run(["git", "status"], capture_output=True).stdout:
-        subprocess.run(["git", "checkout", "-b", "meta-template/{}".format(uuid.uuid1())], capture_output=True)
+        branch = "meta-template/{}".format(uuid.uuid1())
+        subprocess.run(["git", "checkout", "-b", branch], capture_output=True)
         subprocess.run(["git", "commit", "-m", "Meta: update repository files\n\nSee https://github.com/whatwg/spec-factory for details."], capture_output=True)
+        subprocess.run(["git", "push", "origin", branch], capture_output=True)
         subprocess.run(["gh", "pr", "create", "-f"])
     os.chdir(".")
 
