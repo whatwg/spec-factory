@@ -13,5 +13,8 @@
   },
   "html": {
     "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"]
+  },
+  "infra": {
+    "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"]
   }
 }
