@@ -30,13 +30,14 @@ def fill_templates(templates, variables):
     output = {}
     for template in templates:
         output_name = template[:-len(".template")]
-        print(output_name)
         output[output_name] = fill_template(templates[template], variables)
     return output
 
 def fill_template(contents, variables):
     for variable, data in variables.items():
-        if variable == "extra_files" and data != "":
+        if variable == "limited_templates":
+            continue
+        elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
         elif variable == "post_build_step" and data != "":
             data = "\n\tPOST_BUILD_STEP='{}' \\".format(data)
@@ -60,14 +61,17 @@ def update(templates, variables):
 
     files = fill_templates(templates, variables)
 
-    subprocess.run(["git", "checkout", "master"])
-    subprocess.run(["git", "pull"])
-    subprocess.run(["git", "checkout", "-b", "meta-template/{}".format(uuid.uuid1())])
+    subprocess.run(["git", "checkout", "master"], capture_output=True)
+    subprocess.run(["git", "pull"], capture_output=True)
     for file in files:
+        if variables["limited_templates"] and file not in variables["limited_templates"]:
+            continue
         write_file(file, files[file])
-        subprocess.run(["git", "add", file])
-    subprocess.run(["git", "commit", "-m", "Meta: update repository files\n\nSee https://github.com/whatwg/spec-factory for details."])
-
+        subprocess.run(["git", "add", file], capture_output=True)
+    if b"Changes to be committed" in subprocess.run(["git", "status"], capture_output=True).stdout:
+        subprocess.run(["git", "checkout", "-b", "meta-template/{}".format(uuid.uuid1())], capture_output=True)
+        subprocess.run(["git", "commit", "-m", "Meta: update repository files\n\nSee https://github.com/whatwg/spec-factory for details."], capture_output=True)
+        subprocess.run(["gh", "pr", "create", "-f"])
     os.chdir(".")
 
 
@@ -80,14 +84,15 @@ def main():
             shortname = href_to_shortname(standard["href"])
             # Don't update repos we don't yet support
             # https://github.com/whatwg/spec-factory/issues/1
-            if shortname in ("html", "streams"):
+            if shortname != "streams":
                 continue
             variables = {
                 "shortname": shortname,
                 "h1": standard["name"],
                 "extra_files": "",
                 "post_build_step": "",
-                ".gitignore": []
+                ".gitignore": [],
+                "limited_templates": None
             }
             if shortname in local_db:
                 variables.update(local_db[shortname])
