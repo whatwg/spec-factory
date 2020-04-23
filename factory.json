@@ -1,14 +1,17 @@
 {
-    "compat": {
-        "extra_files": "*.png"
-    },
-    "console": {
-        "extra_files": "images/*.*",
-        ".gitignore": ["/.idea", "/node_modules/", "/npm-debug.log"]
-    },
-    "encoding": {
-        "extra_files": "*.txt *.json *.css",
-        "post_build_step": "python visualize.py \"$$DIR/\"",
-        ".gitignore": ["/UnicodeData.txt"]
-    }
+  "compat": {
+    "extra_files": "*.png"
+  },
+  "console": {
+    "extra_files": "images/*.*",
+    ".gitignore": ["/.idea", "/node_modules/", "/npm-debug.log"]
+  },
+  "encoding": {
+    "extra_files": "*.txt *.json *.css",
+    "post_build_step": "python visualize.py \"$$DIR/\"",
+    ".gitignore": ["/UnicodeData.txt"]
+  },
+  "html": {
+    "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"]
+  }
 }
