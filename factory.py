@@ -35,7 +35,7 @@ def fill_templates(templates, variables):
 
 def fill_template(contents, variables):
     for variable, data in variables.items():
-        if variable == "only_these_templates":
+        if variable in ("not_these_templates", "only_these_templates"):
             continue
         elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
@@ -66,6 +66,8 @@ def update(templates, variables):
     for file in files:
         if variables["only_these_templates"] and file not in variables["only_these_templates"]:
             continue
+        elif variables["not_these_templates"] and file in variables["not_these_templates"]:
+            continue
         write_file(file, files[file])
         subprocess.run(["git", "add", file], capture_output=True)
     if b"Changes to be committed" in subprocess.run(["git", "status"], capture_output=True).stdout:
@@ -92,7 +94,8 @@ def main():
                 "extra_files": "",
                 "post_build_step": "",
                 ".gitignore": [],
-                "only_these_templates": None
+                "only_these_templates": None,
+                "not_these_templates": None
             }
             if shortname in local_db:
                 variables.update(local_db[shortname])
