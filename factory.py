@@ -35,7 +35,7 @@ def fill_templates(templates, variables):
 
 def fill_template(contents, variables):
     for variable, data in variables.items():
-        if variable == "limited_templates":
+        if variable == "only_these_templates":
             continue
         elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
@@ -64,7 +64,7 @@ def update(templates, variables):
     subprocess.run(["git", "checkout", "master"], capture_output=True)
     subprocess.run(["git", "pull"], capture_output=True)
     for file in files:
-        if variables["limited_templates"] and file not in variables["limited_templates"]:
+        if variables["only_these_templates"] and file not in variables["only_these_templates"]:
             continue
         write_file(file, files[file])
         subprocess.run(["git", "add", file], capture_output=True)
@@ -84,7 +84,7 @@ def main():
             shortname = href_to_shortname(standard["href"])
             # Don't update repos we don't yet support
             # https://github.com/whatwg/spec-factory/issues/1
-            if shortname != "streams":
+            if shortname == "streams":
                 continue
             variables = {
                 "shortname": shortname,
@@ -92,7 +92,7 @@ def main():
                 "extra_files": "",
                 "post_build_step": "",
                 ".gitignore": [],
-                "limited_templates": None
+                "only_these_templates": None
             }
             if shortname in local_db:
                 variables.update(local_db[shortname])

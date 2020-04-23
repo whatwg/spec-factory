@@ -12,6 +12,6 @@
     ".gitignore": ["/UnicodeData.txt"]
   },
   "html": {
-    "limited_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"]
+    "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"]
   }
 }
