@@ -38,7 +38,7 @@ def fill_template(contents, variables):
     for variable, data in variables.items():
         if variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
-        elif variable == "post_build_step" and data != "":
+        elif variable == "post_build_step" and dafdsta != "":
             data = "\n\tPOST_BUILD_STEP='{}' \\".format(data)
         elif variable == ".gitignore":
             output = ""
