@@ -79,7 +79,7 @@ def update(templates, variables):
 
 def main():
     templates = gather_templates()
-    db = json.loads(requests.get("https://github.com/whatwg/sg/raw/annevk/db/db.json").text)
+    db = json.loads(requests.get("https://github.com/whatwg/sg/raw/master/db.json").text)
     local_db = json.loads(read_file("factory.json"))
     for workstream in db["workstreams"]:
         for standard in workstream["standards"]:
