@@ -1,4 +1,4 @@
-name: build
+name: Build
 on:
   pull_request:
     branches:
@@ -8,17 +8,16 @@ on:
     - master
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
       with:
         fetch-depth: 2
+    # Note: `python` will also be this version, which various scripts depend on.
     - uses: actions/setup-python@v2
       with:
         python-version: 3.8
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 14
     # Note: `make deploy` will do a deploy dry run on PRs.
     - run: make deploy
       env:
