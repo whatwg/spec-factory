@@ -18,6 +18,7 @@
     "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"]
   },
   "streams": {
-    "extra_files": "demos/* demos/**/*"
+    "extra_files": "demos/* demos/**/*",
+    "not_these_templates": [".editorconfig"]
   }
 }
