@@ -4,7 +4,8 @@
   },
   "console": {
     "extra_files": "images/*.*",
-    ".gitignore": ["/.idea", "/node_modules/", "/npm-debug.log"]
+    ".gitignore": ["/.idea", "/node_modules/", "/npm-debug.log"],
+    "not_these_templates": [".editorconfig"]
   },
   "encoding": {
     "extra_files": "*.txt *.json *.css",
