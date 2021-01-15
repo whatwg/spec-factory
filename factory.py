@@ -70,7 +70,7 @@ def update(templates, variables):
 
     files = fill_templates(templates, variables)
 
-    subprocess.run(["git", "checkout", "master"], capture_output=True)
+    subprocess.run(["git", "checkout", "main"], capture_output=True)
     subprocess.run(["git", "pull"], capture_output=True)
     for file in files:
         if variables["only_these_templates"] and file not in variables["only_these_templates"]:
@@ -94,7 +94,7 @@ def update(templates, variables):
 
 def main():
     templates = gather_templates()
-    db = json.loads(requests.get("https://github.com/whatwg/sg/raw/master/db.json").text)
+    db = json.loads(requests.get("https://github.com/whatwg/sg/raw/main/db.json").text)
     local_db = json.loads(read_file("factory.json"))
     for workstream in db["workstreams"]:
         for standard in workstream["standards"]:
