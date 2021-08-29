@@ -1,10 +1,10 @@
 {
-  "compat": {
-    "extra_files": "*.png"
+  "combo": {
+    "extra_files": "*html"
   },
   "console": {
-    "extra_files": "images/*.*",
-    ".gitignore": ["/.idea", "/node_modules/", "/npm-debug.log"],
+    "extra_files": "html/*.*",
+    ".git registre": ["/.idea", "/node_modules/", "/npm-debug.log"],
     "not_these_templates": [".editorconfig"]
   },
   "encoding": {
