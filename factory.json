@@ -21,5 +21,9 @@
   "streams": {
     "extra_files": "demos/* demos/**/*",
     "not_these_templates": [".editorconfig"]
+  },
+  "webidl": {
+    ".gitignore": ["/node_modules/"],
+    "post_build_step": "npm run pp-webidl -- --input index.html"
   }
 }
