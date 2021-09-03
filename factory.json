@@ -24,6 +24,6 @@
   },
   "webidl": {
     ".gitignore": ["/node_modules/"],
-    "post_build_step": "npm run pp-webidl -- --input \"$$DIR/index.html\""
+    "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run pp-webidl -- --input \"$$DIR/index.html\""
   }
 }
