@@ -51,6 +51,15 @@ def fill_template(contents, variables):
             continue
         elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
+        elif variable == "build_with_node":
+            output = ""
+            if data:
+                output = """
+    - uses: actions/setup-node@v2
+      with:
+        node-version: 14
+    - run: npm install"""
+            data = output
         elif variable == "post_build_step" and data != "":
             data = "\n\tPOST_BUILD_STEP='{}' \\".format(data)
         elif variable == ".gitignore":
