@@ -1,8 +1,11 @@
 #!/usr/bin/env python
 
-import os, subprocess, uuid, json, requests
+import argparse, os, subprocess, uuid, json, requests
 
 OBSOLETE_FILES = [".travis.yml", "deploy_key.enc"]
+TEMPLATES = {}
+DB = json.loads(requests.get("https://github.com/whatwg/sg/raw/main/db.json").text)
+FACTORY_DB = {}
 
 def read_file(file):
     return open(file, "r", encoding="utf-8").read()
@@ -59,8 +62,21 @@ def fill_template(contents, variables):
     return contents
 
 
-def update(templates, variables):
-    os.chdir("../{}".format(variables["shortname"]))
+def update_files(shortname, name):
+    os.chdir("../{}".format(shortname))
+
+    variables = {
+        "shortname": shortname,
+        "h1": name,
+        "extra_files": "",
+        "post_build_step": "",
+        ".gitignore": [],
+        "only_these_templates": None,
+        "not_these_templates": None
+    }
+    if shortname in FACTORY_DB:
+        variables.update(FACTORY_DB[shortname])
+
 
     # HTML does not use Bikeshed (yet). We do want some output for comparison purposes
     if variables["shortname"] != "html":
@@ -68,7 +84,7 @@ def update(templates, variables):
         bs = bs_file[:-len(".bs")]
         variables["bs"] = bs
 
-    files = fill_templates(templates, variables)
+    files = fill_templates(TEMPLATES, variables)
 
     subprocess.run(["git", "checkout", "main"], capture_output=True)
     subprocess.run(["git", "pull"], capture_output=True)
@@ -82,6 +98,12 @@ def update(templates, variables):
         if os.path.isfile(file):
             os.remove(file)
 
+    os.chdir(".")
+
+
+def create_pr(shortname):
+    os.chdir("../{}".format(shortname))
+
     subprocess.run(["git", "add", "-A"], capture_output=True)
     if b"Changes to be committed" in subprocess.run(["git", "status"], capture_output=True).stdout:
         branch = "meta-template/{}".format(uuid.uuid1())
@@ -89,27 +111,42 @@ def update(templates, variables):
         subprocess.run(["git", "commit", "-m", "Meta: update repository files\n\nSee https://github.com/whatwg/spec-factory for details."], capture_output=True)
         subprocess.run(["git", "push", "-u", "origin", branch], capture_output=True)
         subprocess.run(["gh", "pr", "create", "-f"])
+
     os.chdir(".")
 
 
-def main():
-    templates = gather_templates()
-    db = json.loads(requests.get("https://github.com/whatwg/sg/raw/main/db.json").text)
-    local_db = json.loads(read_file("factory.json"))
-    for workstream in db["workstreams"]:
+def update_all_standards(create_pr = False):
+    for workstream in DB["workstreams"]:
         for standard in workstream["standards"]:
             shortname = href_to_shortname(standard["href"])
-            variables = {
-                "shortname": shortname,
-                "h1": standard["name"],
-                "extra_files": "",
-                "post_build_step": "",
-                ".gitignore": [],
-                "only_these_templates": None,
-                "not_these_templates": None
-            }
-            if shortname in local_db:
-                variables.update(local_db[shortname])
-            update(templates, variables)
+
+            update_files(shortname, standard["name"])
+
+            if create_pr:
+                 create_pr(shortname)
+
+
+def main():
+    global TEMPLATES, FACTORY_DB
+
+    TEMPLATES = gather_templates()
+    FACTORY_DB = json.loads(read_file("factory.json"))
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--single", nargs=2, type=str)
+    parser.add_argument("--all", action="store_true")
+    parser.add_argument("--create-prs", action="store_true")
+    args = parser.parse_args()
+
+    if args.single:
+        update_files(args.single[0], args.single[1])
+    elif args.all:
+        update_all_standards(args.create_prs)
+    else:
+        parser.print_help()
+        print("Please invoke as one of:\n\n" + \
+              "./factory.py --single <shortname> <name>\n" + \
+              "./factory.py --all" + \
+              "./factory.py --all --create-prs")
 
 main()
