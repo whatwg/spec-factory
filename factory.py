@@ -152,7 +152,6 @@ def main():
     elif args.all:
         update_all_standards(args.create_prs)
     else:
-        parser.print_help()
         print("Please invoke as one of:\n\n" + \
               "./factory.py --single <shortname> <name>\n" + \
               "./factory.py --all" + \
