@@ -78,6 +78,7 @@ def update_files(shortname, name):
         "shortname": shortname,
         "h1": name,
         "extra_files": "",
+        "build_with_node": "",
         "post_build_step": "",
         ".gitignore": [],
         "only_these_templates": None,
