@@ -14,7 +14,8 @@ def write_file(file, contents):
     dirs = os.path.dirname(file)
     if dirs:
         os.makedirs(dirs, exist_ok=True)
-    open(file, "w", encoding="utf-8").write(contents)
+    # `newline="\n"` forces Unix line endings on Windows
+    open(file, "w", encoding="utf-8", newline="\n").write(contents)
 
 def href_to_shortname(href):
     return href[len("https://"):href.index(".")]
@@ -51,6 +52,8 @@ def fill_template(contents, variables):
             continue
         elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
+        elif variable == "bikeshed_indent_size":
+            data = "{}".format(data)
         elif variable == "build_with_node":
             output = ""
             if data:
@@ -83,6 +86,7 @@ def update_files(shortname, name):
         "shortname": shortname,
         "h1": name,
         "extra_files": "",
+        "bikeshed_indent_size": 1,
         "build_with_node": "",
         "post_build_step": "",
         ".gitignore": [],
