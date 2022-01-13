@@ -11,7 +11,7 @@
     "extra_files": "*.txt *.json *.css",
     "post_build_step": "python visualize.py \"$$DIR/\"",
     ".gitignore": ["/UnicodeData.txt"],
-    "extra_implementers": ["Deno", "Node"]
+    "extra_implementers": ["Deno", "Node.js"]
   },
   "html": {
     "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"]
@@ -22,10 +22,10 @@
   "streams": {
     "extra_files": "demos/* demos/**/*",
     "not_these_templates": [".editorconfig"],
-    "extra_implementers": ["Deno", "Node"]
+    "extra_implementers": ["Deno", "Node.js"]
   },
   "url": {
-    "extra_implementers": ["Deno", "Node"]
+    "extra_implementers": ["Deno", "Node.js"]
   },
   "webidl": {
     ".gitignore": ["/node_modules/"],
