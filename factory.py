@@ -71,6 +71,9 @@ def fill_template(contents, variables):
     return contents
 
 
+def format_implementers(name):
+    return "\n   * " + name + ": …"
+
 def update_files(shortname, name):
     os.chdir("../{}".format(shortname))
 
@@ -82,7 +85,8 @@ def update_files(shortname, name):
         "post_build_step": "",
         ".gitignore": [],
         "only_these_templates": None,
-        "not_these_templates": None
+        "not_these_templates": None,
+        "extra_implementers": []
     }
     if shortname in FACTORY_DB:
         variables.update(FACTORY_DB[shortname])
@@ -93,6 +97,8 @@ def update_files(shortname, name):
         [bs_file] = find_files_with_extension(".bs", recurse=False)
         bs = bs_file[:-len(".bs")]
         variables["bs"] = bs
+
+    variables["extra_implementers"] = map(format_implementers, variables["extra_implementers"])
 
     files = fill_templates(TEMPLATES, variables)
 

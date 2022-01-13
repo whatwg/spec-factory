@@ -4,12 +4,14 @@
   },
   "console": {
     "extra_files": "images/*.*",
-    "not_these_templates": [".editorconfig"]
+    "not_these_templates": [".editorconfig"],
+    "extra_implementers": ["Deno"]
   },
   "encoding": {
     "extra_files": "*.txt *.json *.css",
     "post_build_step": "python visualize.py \"$$DIR/\"",
-    ".gitignore": ["/UnicodeData.txt"]
+    ".gitignore": ["/UnicodeData.txt"],
+    "extra_implementers": ["Deno", "Node"]
   },
   "html": {
     "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"]
@@ -19,11 +21,16 @@
   },
   "streams": {
     "extra_files": "demos/* demos/**/*",
-    "not_these_templates": [".editorconfig"]
+    "not_these_templates": [".editorconfig"],
+    "extra_implementers": ["Deno", "Node"]
+  },
+  "url": {
+    "extra_implementers": ["Deno", "Node"]
   },
   "webidl": {
     ".gitignore": ["/node_modules/"],
     "build_with_node": true,
-    "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run pp-webidl -- --input \"$$DIR/index.html\""
+    "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run pp-webidl -- --input \"$$DIR/index.html\"",
+    "extra_implementers": ["Deno"]
   }
 }
