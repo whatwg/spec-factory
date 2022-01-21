@@ -5,7 +5,13 @@
   "console": {
     "extra_files": "images/*.*",
     "not_these_templates": [".editorconfig"],
-    "extra_implementers": ["Deno"]
+    "extra_implementers": ["Deno", "Node.js"]
+  },
+  "dom": {
+    "extra_implementers": [
+      "Deno (only for AbortController, AbortSignal, Event, and EventTarget)",
+      "Node.js (only for AbortController, AbortSignal, Event, and EventTarget)"
+    ]
   },
   "encoding": {
     "extra_files": "*.txt *.json *.css",
@@ -13,8 +19,15 @@
     ".gitignore": ["/UnicodeData.txt"],
     "extra_implementers": ["Deno", "Node.js"]
   },
+  "fetch": {
+    "extra_implementers": ["Deno (not for CORS changes)"]
+  },
   "html": {
-    "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"]
+    "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"],
+    "extra_implementers": [
+      "Deno (only for timers, structured clone, base64 utils, channel messaging, web workers, and web storage)",
+      "Node.js (only for timers, structured clone, base64 utils, channel messaging)"
+    ]
   },
   "infra": {
     "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"]
@@ -31,6 +44,9 @@
     ".gitignore": ["/node_modules/"],
     "build_with_node": true,
     "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run pp-webidl -- --input \"$$DIR/index.html\"",
+    "extra_implementers": ["Deno"]
+  },
+  "websockets": {
     "extra_implementers": ["Deno"]
   }
 }
