@@ -67,12 +67,10 @@ def fill_template(contents, variables):
             for entry in data:
                 output += "\n{}".format(entry)
             data = output
+        elif variable == "extra_implementers":
+            data = map(lambda name : "\n   * " + name + ": …", data)
         contents = contents.replace("@@{}@@".format(variable), data)
     return contents
-
-
-def format_implementers(name):
-    return "\n   * " + name + ": …"
 
 def update_files(shortname, name):
     os.chdir("../{}".format(shortname))
@@ -97,8 +95,6 @@ def update_files(shortname, name):
         [bs_file] = find_files_with_extension(".bs", recurse=False)
         bs = bs_file[:-len(".bs")]
         variables["bs"] = bs
-
-    variables["extra_implementers"] = map(format_implementers, variables["extra_implementers"])
 
     files = fill_templates(TEMPLATES, variables)
 
