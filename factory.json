@@ -25,8 +25,8 @@
   "html": {
     "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"],
     "extra_implementers": [
-      "Deno (only for timers, structured clone, base64 utils, channel messaging, web workers, and web storage)",
-      "Node.js (only for timers, structured clone, base64 utils, channel messaging)"
+      "Deno (only for timers, structured clone, base64 utils, channel messaging, esm resolver, web workers, and web storage)",
+      "Node.js (only for timers, structured clone, base64 utils, channel messaging, and esm resolver)"
     ]
   },
   "infra": {
