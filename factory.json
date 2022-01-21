@@ -44,7 +44,7 @@
     ".gitignore": ["/node_modules/"],
     "build_with_node": true,
     "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run pp-webidl -- --input \"$$DIR/index.html\"",
-    "extra_implementers": ["Deno"]
+    "extra_implementers": ["Deno", "Node.js"]
   },
   "websockets": {
     "extra_implementers": ["Deno"]
