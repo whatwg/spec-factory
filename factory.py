@@ -131,14 +131,14 @@ def create_pr(shortname):
     os.chdir(".")
 
 
-def update_all_standards(create_pr = False):
+def update_all_standards(create_prs = False):
     for workstream in DB["workstreams"]:
         for standard in workstream["standards"]:
             shortname = href_to_shortname(standard["href"])
 
             update_files(shortname, standard["name"])
 
-            if create_pr:
+            if create_prs:
                  create_pr(shortname)
 
 
