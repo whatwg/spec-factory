@@ -72,6 +72,7 @@ def fill_template(contents, variables):
         contents = contents.replace("@@{}@@".format(variable), data)
     return contents
 
+
 def update_files(shortname, name):
     os.chdir("../{}".format(shortname))
 
