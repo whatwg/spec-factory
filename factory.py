@@ -158,7 +158,7 @@ def main():
     else:
         print("Please invoke as one of:\n\n" + \
               "./factory.py --single <shortname> <name>\n" + \
-              "./factory.py --all" + \
+              "./factory.py --all\n" + \
               "./factory.py --all --create-prs")
 
 main()
