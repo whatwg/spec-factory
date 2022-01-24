@@ -67,6 +67,11 @@ def fill_template(contents, variables):
             for entry in data:
                 output += "\n{}".format(entry)
             data = output
+        elif variable == "extra_implementers":
+            output = ""
+            for entry in data:
+                output += "\n   * {}: …".format(entry)
+            data = output
         contents = contents.replace("@@{}@@".format(variable), data)
     return contents
 
@@ -82,7 +87,8 @@ def update_files(shortname, name):
         "post_build_step": "",
         ".gitignore": [],
         "only_these_templates": None,
-        "not_these_templates": None
+        "not_these_templates": None,
+        "extra_implementers": []
     }
     if shortname in FACTORY_DB:
         variables.update(FACTORY_DB[shortname])
@@ -125,14 +131,14 @@ def create_pr(shortname):
     os.chdir(".")
 
 
-def update_all_standards(create_pr = False):
+def update_all_standards(create_prs = False):
     for workstream in DB["workstreams"]:
         for standard in workstream["standards"]:
             shortname = href_to_shortname(standard["href"])
 
             update_files(shortname, standard["name"])
 
-            if create_pr:
+            if create_prs:
                  create_pr(shortname)
 
 
@@ -155,7 +161,7 @@ def main():
     else:
         print("Please invoke as one of:\n\n" + \
               "./factory.py --single <shortname> <name>\n" + \
-              "./factory.py --all" + \
+              "./factory.py --all\n" + \
               "./factory.py --all --create-prs")
 
 main()

@@ -4,26 +4,49 @@
   },
   "console": {
     "extra_files": "images/*.*",
-    "not_these_templates": [".editorconfig"]
+    "not_these_templates": [".editorconfig"],
+    "extra_implementers": ["Deno", "Node.js"]
+  },
+  "dom": {
+    "extra_implementers": [
+      "Deno (only for aborting and events)",
+      "Node.js (only for aborting and events)"
+    ]
   },
   "encoding": {
     "extra_files": "*.txt *.json *.css",
     "post_build_step": "python visualize.py \"$$DIR/\"",
-    ".gitignore": ["/UnicodeData.txt"]
+    ".gitignore": ["/UnicodeData.txt"],
+    "extra_implementers": ["Deno", "Node.js"]
+  },
+  "fetch": {
+    "extra_implementers": ["Deno (not for CORS changes)"]
   },
   "html": {
-    "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"]
+    "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"],
+    "extra_implementers": [
+      "Deno (only for timers, structured clone, base64 utils, channel messaging, module resolution, web workers, and web storage)",
+      "Node.js (only for timers, structured clone, base64 utils, channel messaging, and module resolution)"
+    ]
   },
   "infra": {
     "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"]
   },
   "streams": {
     "extra_files": "demos/* demos/**/*",
-    "not_these_templates": [".editorconfig"]
+    "not_these_templates": [".editorconfig"],
+    "extra_implementers": ["Deno", "Node.js"]
+  },
+  "url": {
+    "extra_implementers": ["Deno", "Node.js"]
   },
   "webidl": {
     ".gitignore": ["/node_modules/"],
     "build_with_node": true,
-    "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run pp-webidl -- --input \"$$DIR/index.html\""
+    "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run pp-webidl -- --input \"$$DIR/index.html\"",
+    "extra_implementers": ["Deno", "Node.js"]
+  },
+  "websockets": {
+    "extra_implementers": ["Deno"]
   }
 }
