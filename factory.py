@@ -68,7 +68,10 @@ def fill_template(contents, variables):
                 output += "\n{}".format(entry)
             data = output
         elif variable == "extra_implementers":
-            data = map(lambda name : "\n   * " + name + ": …", data)
+            output = ""
+            for entry in data:
+                output += "\n   * {}: …".format(entry)
+            data = output
         contents = contents.replace("@@{}@@".format(variable), data)
     return contents
 
