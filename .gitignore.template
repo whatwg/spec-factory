@@ -1,4 +1,4 @@
 /@@shortname@@.spec.whatwg.org/
 /deploy.sh
 /@@bs@@.html
-/review.sh@@.gitignore@@
+@@.gitignore@@
