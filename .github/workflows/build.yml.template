@@ -15,9 +15,10 @@ jobs:
       with:
         fetch-depth: 2
     # Note: `python` will also be this version, which various scripts depend on.
-    - uses: actions/setup-python@v3
+    - uses: actions/setup-python@v4
       with:
         python-version: "3.10"@@build_with_node@@
+    - run: pip install bikeshed && bikeshed update
     # Note: `make deploy` will do a deploy dry run on PRs.
     - run: make deploy
       env:
