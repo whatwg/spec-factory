@@ -43,7 +43,7 @@
   "webidl": {
     ".gitignore": ["/node_modules/"],
     "build_with_node": true,
-    "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run pp-webidl -- --input \"$$DIR/index.html\"",
+    "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run webidl-grammar-post-processor -- --input \"$$DIR/index.html\"",
     "extra_implementers": ["Deno", "Node.js", "webidl2.js", "widlparser"]
   },
   "websockets": {
