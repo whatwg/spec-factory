@@ -57,7 +57,7 @@ def fill_template(contents, variables):
                 output = """
     - uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 18
     - run: npm install"""
             data = output
         elif variable == "post_build_step" and data != "":
