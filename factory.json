@@ -34,7 +34,6 @@
   },
   "storage": {
     ".gitignore": ["/node_modules/"],
-    "build_with_node": true,
     "extra_files": "assets/*"
   },
   "streams": {
