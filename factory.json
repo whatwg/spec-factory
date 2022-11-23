@@ -32,6 +32,12 @@
   "infra": {
     "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"]
   },
+  "storage": {
+    ".gitignore": ["/node_modules/"],
+    "build_with_node": true,
+    "extra_files": "assets/*",
+    "post_build_step": "npm run build-diagram"
+  },
   "streams": {
     "extra_files": "demos/* demos/**/*",
     "not_these_templates": [".editorconfig"],
