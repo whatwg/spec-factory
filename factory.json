@@ -35,8 +35,7 @@
   "storage": {
     ".gitignore": ["/node_modules/"],
     "build_with_node": true,
-    "extra_files": "assets/*",
-    "post_build_step": "npm run build-diagram"
+    "extra_files": "assets/*"
   },
   "streams": {
     "extra_files": "demos/* demos/**/*",
