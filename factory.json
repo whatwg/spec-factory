@@ -42,7 +42,7 @@
     "extra_implementers": ["Deno", "Node.js"]
   },
   "url": {
-    "extra_implementers": ["Deno", "Node.js"]
+    "extra_implementers": ["Deno", "Node.js", "Ada"]
   },
   "webidl": {
     ".gitignore": ["/node_modules/"],
