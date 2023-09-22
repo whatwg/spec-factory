@@ -14,6 +14,6 @@ If you think your PR is ready to land, please double-check that the checklist is
    * Gecko: …
    * WebKit: …@@extra_implementers@@
 - [ ] [MDN issue](https://github.com/whatwg/meta/blob/main/MAINTAINERS.md#handling-pull-requests) is filed: …
-- [ ] There is a clear commit message to use when squashing this PR. Either squash the commits yourself or write the commit message here:
+- [ ] There is a [clear commit message](https://github.com/whatwg/meta/blob/main/COMMITTING.md) to use. <!-- Either squash the commits yourself or write the commit message here. -->
 
 (See [WHATWG Working Mode: Changes](https://whatwg.org/working-mode#changes) for more details.)
