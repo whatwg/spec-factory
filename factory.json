@@ -1,10 +1,11 @@
 {
   "compat": {
-    "extra_files": "*.png"
+    "extra_files": "*.png",
+    "not_these_templates": ["README.md"]
   },
   "console": {
     "extra_files": "images/*.*",
-    "not_these_templates": [".editorconfig"],
+    "not_these_templates": [".editorconfig", "README.md"],
     "extra_implementers": ["Deno", "Node.js"]
   },
   "dom": {
@@ -22,6 +23,12 @@
   "fetch": {
     "extra_implementers": ["Deno (not for CORS changes)"]
   },
+  "fs": {
+    "not_these_templates": ["README.md"]
+  },
+  "fullscreen": {
+    "not_these_templates": ["README.md"]
+  },
   "html": {
     "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"],
     "extra_implementers": [
@@ -38,7 +45,7 @@
   },
   "streams": {
     "extra_files": "demos/* demos/**/*",
-    "not_these_templates": [".editorconfig"],
+    "not_these_templates": [".editorconfig", "README.md"],
     "extra_implementers": ["Deno", "Node.js"]
   },
   "url": {
