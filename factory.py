@@ -43,7 +43,7 @@ def fill_templates(templates, variables):
     for template in templates:
         output_name = template[:-len(".template")]
         if output_name == "README.md":
-            if "readme" in variables:
+            if variables["readme"]:
                 templates[template] += "\n" + read_file("../spec-factory/{}".format(variables["readme"]))
             if os.path.isfile("READMEEND.md"):
                 templates[template] += "\n" + read_file("READMEEND.md")
