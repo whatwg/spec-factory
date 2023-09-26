@@ -1,33 +1,29 @@
 {
   "compat": {
-    "extra_files": "*.png",
-    "not_these_templates": ["README.md"]
+    "extra_files": "*.png"
   },
   "console": {
     "extra_files": "images/*.*",
-    "not_these_templates": [".editorconfig", "README.md"],
+    "not_these_templates": [".editorconfig"],
     "extra_implementers": ["Deno", "Node.js"]
   },
   "dom": {
     "extra_implementers": [
       "Deno (only for aborting and events)",
       "Node.js (only for aborting and events)"
-    ]
+    ],
+    "readme": "README-addition-anne"
   },
   "encoding": {
     "extra_files": "*.txt *.json *.css",
     "post_build_step": "python visualize.py \"$$DIR/\"",
     ".gitignore": ["/UnicodeData.txt"],
-    "extra_implementers": ["Deno", "Node.js"]
+    "extra_implementers": ["Deno", "Node.js"],
+    "readme": "README-addition-anne"
   },
   "fetch": {
-    "extra_implementers": ["Deno (not for CORS changes)"]
-  },
-  "fs": {
-    "not_these_templates": ["README.md"]
-  },
-  "fullscreen": {
-    "not_these_templates": ["README.md"]
+    "extra_implementers": ["Deno (not for CORS changes)"],
+    "readme": "README-addition-anne"
   },
   "html": {
     "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"],
@@ -37,11 +33,16 @@
     ]
   },
   "infra": {
-    "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"]
+    "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"],
+    "readme": "README-addition-anne"
+  },
+  "notifications": {
+    "readme": "README-addition-anne"
   },
   "storage": {
     ".gitignore": ["/node_modules/", "/package-lock.json"],
-    "extra_files": "assets/*"
+    "extra_files": "assets/*",
+    "readme": "README-addition-anne"
   },
   "streams": {
     "extra_files": "demos/* demos/**/*",
@@ -49,7 +50,8 @@
     "extra_implementers": ["Deno", "Node.js"]
   },
   "url": {
-    "extra_implementers": ["Deno", "Node.js"]
+    "extra_implementers": ["Deno", "Node.js"],
+    "readme": "README-addition-anne"
   },
   "webidl": {
     ".gitignore": ["/node_modules/"],
@@ -59,5 +61,8 @@
   },
   "websockets": {
     "extra_implementers": ["Deno"]
+  },
+  "xhr": {
+    "readme": "README-addition-anne"
   }
 }
