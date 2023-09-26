@@ -51,6 +51,8 @@ def fill_template(contents, variables):
             continue
         elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
+        elif variable == "bikeshed_indent_size":
+            data = str(data)
         elif variable == "build_with_node":
             output = ""
             if data:
@@ -83,6 +85,7 @@ def update_files(shortname, name):
         "shortname": shortname,
         "h1": name,
         "extra_files": "",
+        "bikeshed_indent_size": 1,
         "build_with_node": "",
         "post_build_step": "",
         ".gitignore": [],
