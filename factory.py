@@ -53,15 +53,12 @@ def fill_template(contents, variables):
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
         elif variable == "bikeshed_indent_size":
             data = str(data)
-        elif variable == "build_with_node":
-            output = ""
-            if data:
-                output = """
+        elif variable == "build_with_node" and data != "":
+            data = """
     - uses: actions/setup-node@v3
       with:
         node-version: 18
     - run: npm install"""
-            data = output
         elif variable == "post_build_step" and data != "":
             data = "\n\tPOST_BUILD_STEP='{}' \\".format(data)
         elif variable == ".gitignore":
