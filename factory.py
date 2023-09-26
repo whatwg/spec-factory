@@ -8,13 +8,13 @@ DB = json.loads(requests.get("https://github.com/whatwg/sg/raw/main/db.json").te
 FACTORY_DB = {}
 
 def read_file(file):
-    return open(file, "r", encoding="utf-8").read()
+    return open(file, "r", encoding="utf-8", newline="\n").read()
 
 def write_file(file, contents):
     dirs = os.path.dirname(file)
     if dirs:
         os.makedirs(dirs, exist_ok=True)
-    open(file, "w", encoding="utf-8").write(contents)
+    open(file, "w", encoding="utf-8", newline="\n").write(contents)
 
 def href_to_shortname(href):
     return href[len("https://"):href.index(".")]
