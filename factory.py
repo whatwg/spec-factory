@@ -149,7 +149,7 @@ def main():
     FACTORY_DB = json.loads(read_file("factory.json"))
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--single", nargs=2, type=str, metavar=('<shortname>', '<h1>'), help="generate a single standard, e.g., --single xhr XMLHttpRequest")
+    parser.add_argument("--single", nargs=2, type=str, metavar=("<shortname>", "<h1>"), help="generate a single standard, e.g., --single xhr XMLHttpRequest")
     parser.add_argument("--all", action="store_true", help="generate all standards (as per SG's db.json)")
     parser.add_argument("--create-prs", action="store_true", help="create PRs, can only be used in combination with --all")
     args = parser.parse_args()
