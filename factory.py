@@ -14,8 +14,7 @@ def write_file(file, contents):
     dirs = os.path.dirname(file)
     if dirs:
         os.makedirs(dirs, exist_ok=True)
-    # `newline="\n"` forces Unix line endings on Windows
-    open(file, "w", encoding="utf-8", newline="\n").write(contents)
+    open(file, "w", encoding="utf-8").write(contents)
 
 def href_to_shortname(href):
     return href[len("https://"):href.index(".")]
@@ -53,7 +52,7 @@ def fill_template(contents, variables):
         elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
         elif variable == "bikeshed_indent_size":
-            data = "{}".format(data)
+            data = str(data)
         elif variable == "build_with_node":
             output = ""
             if data:
