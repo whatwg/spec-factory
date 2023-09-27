@@ -47,4 +47,4 @@ is not indented, but
 ```
 is.
 
-End tags may be included (if done consistently) and attributes may be quoted (using double quotes), though the prevelant theme is to omit end tags and not quote attributes (unless they contain a space).
+End tags may be included (if done consistently) and attributes may be quoted (using double quotes), though the prevalent theme is to omit end tags and not quote attributes (unless they contain a space).
