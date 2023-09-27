@@ -42,12 +42,17 @@ def fill_templates(templates, variables):
     output = {}
     for template in templates:
         output_name = template[:-len(".template")]
+        if output_name == "README.md":
+            if variables["readme"]:
+                templates[template] += "\n" + read_file("../spec-factory/{}".format(variables["readme"]))
+            if os.path.isfile("READMEEND.md"):
+                templates[template] += "\n" + read_file("READMEEND.md")
         output[output_name] = fill_template(templates[template], variables)
     return output
 
 def fill_template(contents, variables):
     for variable, data in variables.items():
-        if variable in ("not_these_templates", "only_these_templates"):
+        if variable in ("not_these_templates", "only_these_templates", "readme"):
             continue
         elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
@@ -88,7 +93,8 @@ def update_files(shortname, name):
         ".gitignore": [],
         "only_these_templates": None,
         "not_these_templates": None,
-        "extra_implementers": []
+        "extra_implementers": [],
+        "readme": None
     }
     if shortname in FACTORY_DB:
         variables.update(FACTORY_DB[shortname])
