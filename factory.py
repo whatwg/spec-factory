@@ -4,6 +4,7 @@ import argparse, os, subprocess, uuid, json, requests
 
 OBSOLETE_FILES = [".travis.yml", "deploy_key.enc"]
 TEMPLATES = {}
+TEMPLATE_PARTS = {}
 DB = json.loads(requests.get("https://github.com/whatwg/sg/raw/main/db.json").text)
 FACTORY_DB = {}
 
@@ -31,11 +32,11 @@ def find_files_with_extension(extension, recurse=True):
     return paths
 
 
-def gather_templates():
-    templates = {}
-    for path in find_files_with_extension(".template"):
-        templates[path] = read_file(path)
-    return templates
+def gather_files(extension):
+    files = {}
+    for path in find_files_with_extension(extension):
+        files[path] = read_file(path)
+    return files
 
 
 def fill_templates(templates, variables):
@@ -44,7 +45,7 @@ def fill_templates(templates, variables):
         output_name = template[:-len(".template")]
         if output_name == "README.md":
             if variables["readme"]:
-                templates[template] += "\n" + read_file("../spec-factory/{}".format(variables["readme"]))
+                templates[template] += "\n" + TEMPLATE_PARTS[variables["readme"]]
             if os.path.isfile("READMEEND.md"):
                 templates[template] += "\n" + read_file("READMEEND.md")
         output[output_name] = fill_template(templates[template], variables)
@@ -80,7 +81,7 @@ def fill_template(contents, variables):
     return contents
 
 
-def update_files(shortname, name):
+def update_files(shortname, name, in_main=False):
     os.chdir("../{}".format(shortname))
 
     variables = {
@@ -108,8 +109,10 @@ def update_files(shortname, name):
 
     files = fill_templates(TEMPLATES, variables)
 
-    subprocess.run(["git", "checkout", "main"], capture_output=True)
-    subprocess.run(["git", "pull"], capture_output=True)
+    if in_main:
+        subprocess.run(["git", "checkout", "main"], capture_output=True)
+        subprocess.run(["git", "pull"], capture_output=True)
+
     for file in files:
         if variables["only_these_templates"] and file not in variables["only_these_templates"]:
             continue
@@ -142,17 +145,18 @@ def update_all_standards(create_prs = False):
         for standard in workstream["standards"]:
             shortname = href_to_shortname(standard["href"])
 
-            update_files(shortname, standard["name"])
+            update_files(shortname, standard["name"], True)
 
             if create_prs:
                  create_pr(shortname)
 
 
 def main():
-    global TEMPLATES, FACTORY_DB
+    global TEMPLATES, FACTORY_DB, TEMPLATE_PARTS
 
-    TEMPLATES = gather_templates()
+    TEMPLATES = gather_files(".template")
     FACTORY_DB = json.loads(read_file("factory.json"))
+    TEMPLATE_PARTS = gather_files(".template-part")
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--single", nargs=2, type=str, metavar=("<shortname>", "<h1>"), help="generate a single standard, e.g., --single xhr XMLHttpRequest")
