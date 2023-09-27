@@ -39,16 +39,17 @@ def gather_files(extension):
     return files
 
 
-def fill_templates(templates, variables):
+def copy_and_fill_templates(variables):
     output = {}
-    for template in templates:
+    for template in TEMPLATES:
         output_name = template[:-len(".template")]
+        output_contents = TEMPLATES[template]
         if output_name == "README.md":
             if variables["readme"]:
-                templates[template] += "\n" + TEMPLATE_PARTS[variables["readme"]]
+                output_contents += "\n" + TEMPLATE_PARTS[variables["readme"]]
             if os.path.isfile("READMEEND.md"):
-                templates[template] += "\n" + read_file("READMEEND.md")
-        output[output_name] = fill_template(templates[template], variables)
+                output_contents += "\n" + read_file("READMEEND.md")
+        output[output_name] = fill_template(output_contents, variables)
     return output
 
 def fill_template(contents, variables):
@@ -108,7 +109,7 @@ def update_files(shortname, name, in_main=False):
         variables["bs"] = bs
         variables["source"] = bs + ".bs"
 
-    files = fill_templates(TEMPLATES, variables)
+    files = copy_and_fill_templates(variables)
 
     if in_main:
         subprocess.run(["git", "checkout", "main"], capture_output=True)
