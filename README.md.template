@@ -26,6 +26,8 @@ To ensure your patch meets all the necessary requirements, please also see the [
 
 Tests are an essential part of the standardization process and will need to be created or adjusted as changes to the standard are made. Tests for the @@h1@@ Standard can be found in the `@@shortname@@/` directory of [`web-platform-tests/wpt`](https://github.com/web-platform-tests/wpt).
 
+A dashboard showing the tests running against browser engines can be seen at [wpt.fyi/results/@@shortname@@](https://wpt.fyi/results/@@shortname@@).
+
 ## Building "locally"
 
 For quick local iteration, run `make`; this will use a web service to build the standard, so that you don't have to install anything. See more in the [Contributor Guidelines](https://github.com/whatwg/meta/blob/main/CONTRIBUTING.md#building).
