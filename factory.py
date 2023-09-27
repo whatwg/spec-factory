@@ -53,7 +53,7 @@ def fill_templates(templates, variables):
 
 def fill_template(contents, variables):
     for variable, data in variables.items():
-        if variable in ("not_these_templates", "only_these_templates", "readme"):
+        if variable in ("not_these_templates", "readme"):
             continue
         elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
@@ -85,6 +85,7 @@ def update_files(shortname, name, in_main=False):
     os.chdir("../{}".format(shortname))
 
     variables = {
+        "source": "source",
         "shortname": shortname,
         "h1": name,
         "extra_files": "",
@@ -92,7 +93,6 @@ def update_files(shortname, name, in_main=False):
         "build_with_node": "",
         "post_build_step": "",
         ".gitignore": [],
-        "only_these_templates": None,
         "not_these_templates": None,
         "extra_implementers": [],
         "readme": None
@@ -106,6 +106,7 @@ def update_files(shortname, name, in_main=False):
         [bs_file] = find_files_with_extension(".bs", recurse=False)
         bs = bs_file[:-len(".bs")]
         variables["bs"] = bs
+        variables["source"] = bs + ".bs"
 
     files = fill_templates(TEMPLATES, variables)
 
@@ -114,9 +115,7 @@ def update_files(shortname, name, in_main=False):
         subprocess.run(["git", "pull"], capture_output=True)
 
     for file in files:
-        if variables["only_these_templates"] and file not in variables["only_these_templates"]:
-            continue
-        elif variables["not_these_templates"] and file in variables["not_these_templates"]:
+        if variables["not_these_templates"] and file in variables["not_these_templates"]:
             continue
         write_file(file, files[file])
     for file in OBSOLETE_FILES:

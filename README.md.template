@@ -16,7 +16,7 @@ We'd be happy to help you with all of this [on Chat](https://whatwg.org/chat).
 
 ## Pull requests
 
-In short, change `@@bs@@.bs` and submit your patch, with a [good commit message](https://github.com/whatwg/meta/blob/main/COMMITTING.md).
+In short, change `@@source@@` and submit your patch, with a [good commit message](https://github.com/whatwg/meta/blob/main/COMMITTING.md).
 
 Please add your name to the Acknowledgments section in your first pull request, even for trivial fixes. The names are sorted lexicographically.
 
