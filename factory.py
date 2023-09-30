@@ -31,19 +31,24 @@ def find_files_with_extension(extension, recurse=True):
             del dirs[:]
     return paths
 
+def find_files_in_dir(path):
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            yield os.path.relpath(os.path.join(root, file), start=path)
 
-def gather_files(extension):
+
+def gather_files(directory):
     files = {}
-    for path in find_files_with_extension(extension):
-        files[path] = read_file(path)
+    for path in find_files_in_dir(directory):
+        files[path] = read_file(os.path.join(directory, path))
     return files
 
 
 def copy_and_fill_templates(variables):
     output = {}
     for template in TEMPLATES:
-        output_name = template[:-len(".template")]
         output_contents = TEMPLATES[template]
+        output_name = template
         if output_name == "README.md":
             if variables["readme"]:
                 output_contents += "\n" + TEMPLATE_PARTS[variables["readme"]]
@@ -154,9 +159,9 @@ def update_all_standards(create_prs = False):
 def main():
     global TEMPLATES, FACTORY_DB, TEMPLATE_PARTS
 
-    TEMPLATES = gather_files(".template")
+    TEMPLATES = gather_files("templates/")
     FACTORY_DB = json.loads(read_file("factory.json"))
-    TEMPLATE_PARTS = gather_files(".template-part")
+    TEMPLATE_PARTS = gather_files("partial/")
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--single", nargs=2, type=str, metavar=("<shortname>", "<h1>"), help="generate a single standard, e.g., --single xhr XMLHttpRequest")
