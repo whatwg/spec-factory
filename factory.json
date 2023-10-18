@@ -53,6 +53,14 @@
     "extra_implementers": ["Deno", "Node.js"],
     "readme": "README.md.anne.template-part"
   },
+  "urlpattern": {
+    "extra_implementers": [
+      "Deno",
+      "kenchris/urlpattern-polyfill"
+    ],
+    "bikeshed_indent_size": 2,
+    "bikeshed_max_line_length": "off"
+  },
   "webidl": {
     ".gitignore": ["/node_modules/"],
     "bikeshed_indent_size": 4,

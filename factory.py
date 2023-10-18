@@ -60,6 +60,8 @@ def fill_template(contents, variables):
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
         elif variable == "bikeshed_indent_size":
             data = str(data)
+        elif variable == "bikeshed_max_line_length" and data != "":
+            data = "\nmax_line_length = {}".format(data)
         elif variable == "build_with_node" and data != "":
             data = """
     - uses: actions/setup-node@v3
@@ -91,6 +93,7 @@ def update_files(shortname, name, in_main=False):
         "h1": name,
         "extra_files": "",
         "bikeshed_indent_size": 1,
+        "bikeshed_max_line_length": "",
         "build_with_node": "",
         "post_build_step": "",
         ".gitignore": [],
