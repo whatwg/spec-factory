@@ -16,7 +16,7 @@ remote: @@bs@@.bs
 	);
 
 local: @@bs@@.bs
-	bikeshed spec @@bs@@.bs @@bs@@.html --md-Text-Macro="COMMIT-SHA LOCAL COPY"
+	bikeshed spec @@bs@@.bs @@bs@@.html --md-Text-Macro="COMMIT-SHA LOCAL-COPY"
 
 deploy: @@bs@@.bs
 	curl --remote-name --fail https://resources.whatwg.org/build/deploy.sh@@extra_files@@@@post_build_step@@

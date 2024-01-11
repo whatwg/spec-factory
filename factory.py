@@ -4,17 +4,18 @@ import argparse, os, subprocess, uuid, json, requests
 
 OBSOLETE_FILES = [".travis.yml", "deploy_key.enc"]
 TEMPLATES = {}
+TEMPLATE_PARTS = {}
 DB = json.loads(requests.get("https://github.com/whatwg/sg/raw/main/db.json").text)
 FACTORY_DB = {}
 
 def read_file(file):
-    return open(file, "r", encoding="utf-8").read()
+    return open(file, "r", encoding="utf-8", newline="\n").read()
 
 def write_file(file, contents):
     dirs = os.path.dirname(file)
     if dirs:
         os.makedirs(dirs, exist_ok=True)
-    open(file, "w", encoding="utf-8").write(contents)
+    open(file, "w", encoding="utf-8", newline="\n").write(contents)
 
 def href_to_shortname(href):
     return href[len("https://"):href.index(".")]
@@ -31,35 +32,42 @@ def find_files_with_extension(extension, recurse=True):
     return paths
 
 
-def gather_templates():
-    templates = {}
-    for path in find_files_with_extension(".template"):
-        templates[path] = read_file(path)
-    return templates
+def gather_files(extension):
+    files = {}
+    for path in find_files_with_extension(extension):
+        files[path] = read_file(path)
+    return files
 
 
-def fill_templates(templates, variables):
+def copy_and_fill_templates(variables):
     output = {}
-    for template in templates:
+    for template in TEMPLATES:
         output_name = template[:-len(".template")]
-        output[output_name] = fill_template(templates[template], variables)
+        output_contents = TEMPLATES[template]
+        if output_name == "README.md":
+            if variables["readme"]:
+                output_contents += "\n" + TEMPLATE_PARTS[variables["readme"]]
+            if os.path.isfile("READMEEND.md"):
+                output_contents += "\n" + read_file("READMEEND.md")
+        output[output_name] = fill_template(output_contents, variables)
     return output
 
 def fill_template(contents, variables):
     for variable, data in variables.items():
-        if variable in ("not_these_templates", "only_these_templates"):
+        if variable in ("not_these_templates", "readme"):
             continue
         elif variable == "extra_files" and data != "":
             data = "\n\tEXTRA_FILES=\"{}\" \\".format(data)
-        elif variable == "build_with_node":
-            output = ""
-            if data:
-                output = """
+        elif variable == "bikeshed_indent_size":
+            data = str(data)
+        elif variable == "bikeshed_max_line_length" and data != "":
+            data = "\nmax_line_length = {}".format(data)
+        elif variable == "build_with_node" and data != "":
+            data = """
     - uses: actions/setup-node@v3
       with:
-        node-version: 16
+        node-version: 18
     - run: npm install"""
-            data = output
         elif variable == "post_build_step" and data != "":
             data = "\n\tPOST_BUILD_STEP='{}' \\".format(data)
         elif variable == ".gitignore":
@@ -76,19 +84,22 @@ def fill_template(contents, variables):
     return contents
 
 
-def update_files(shortname, name):
+def update_files(shortname, name, in_main=False):
     os.chdir("../{}".format(shortname))
 
     variables = {
+        "source": "source",
         "shortname": shortname,
         "h1": name,
         "extra_files": "",
+        "bikeshed_indent_size": 1,
+        "bikeshed_max_line_length": "",
         "build_with_node": "",
         "post_build_step": "",
         ".gitignore": [],
-        "only_these_templates": None,
         "not_these_templates": None,
-        "extra_implementers": []
+        "extra_implementers": [],
+        "readme": None
     }
     if shortname in FACTORY_DB:
         variables.update(FACTORY_DB[shortname])
@@ -99,15 +110,16 @@ def update_files(shortname, name):
         [bs_file] = find_files_with_extension(".bs", recurse=False)
         bs = bs_file[:-len(".bs")]
         variables["bs"] = bs
+        variables["source"] = bs + ".bs"
 
-    files = fill_templates(TEMPLATES, variables)
+    files = copy_and_fill_templates(variables)
 
-    subprocess.run(["git", "checkout", "main"], capture_output=True)
-    subprocess.run(["git", "pull"], capture_output=True)
+    if in_main:
+        subprocess.run(["git", "checkout", "main"], capture_output=True)
+        subprocess.run(["git", "pull"], capture_output=True)
+
     for file in files:
-        if variables["only_these_templates"] and file not in variables["only_these_templates"]:
-            continue
-        elif variables["not_these_templates"] and file in variables["not_these_templates"]:
+        if variables["not_these_templates"] and file in variables["not_these_templates"]:
             continue
         write_file(file, files[file])
     for file in OBSOLETE_FILES:
@@ -136,32 +148,32 @@ def update_all_standards(create_prs = False):
         for standard in workstream["standards"]:
             shortname = href_to_shortname(standard["href"])
 
-            update_files(shortname, standard["name"])
+            update_files(shortname, standard["name"], True)
 
             if create_prs:
                  create_pr(shortname)
 
 
 def main():
-    global TEMPLATES, FACTORY_DB
+    global TEMPLATES, FACTORY_DB, TEMPLATE_PARTS
 
-    TEMPLATES = gather_templates()
+    TEMPLATES = gather_files(".template")
     FACTORY_DB = json.loads(read_file("factory.json"))
+    TEMPLATE_PARTS = gather_files(".template-part")
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--single", nargs=2, type=str)
-    parser.add_argument("--all", action="store_true")
-    parser.add_argument("--create-prs", action="store_true")
+    parser.add_argument("--single", nargs=2, type=str, metavar=("<shortname>", "<h1>"), help="generate a single standard, e.g., --single xhr XMLHttpRequest")
+    parser.add_argument("--all", action="store_true", help="generate all standards (as per SG's db.json)")
+    parser.add_argument("--create-prs", action="store_true", help="create PRs; can only be used in combination with --all")
     args = parser.parse_args()
 
-    if args.single:
+    if args.single and not args.create_prs:
         update_files(args.single[0], args.single[1])
     elif args.all:
         update_all_standards(args.create_prs)
     else:
-        print("Please invoke as one of:\n\n" + \
-              "./factory.py --single <shortname> <name>\n" + \
-              "./factory.py --all\n" + \
-              "./factory.py --all --create-prs")
+        parser.print_help()
+        exit(1)
+    exit(0)
 
 main()

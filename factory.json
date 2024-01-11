@@ -11,42 +11,68 @@
     "extra_implementers": [
       "Deno (only for aborting and events)",
       "Node.js (only for aborting and events)"
-    ]
+    ],
+    "readme": "README.md.anne.template-part"
   },
   "encoding": {
     "extra_files": "*.txt *.json *.css",
     "post_build_step": "python visualize.py \"$$DIR/\"",
     ".gitignore": ["/UnicodeData.txt"],
-    "extra_implementers": ["Deno", "Node.js"]
+    "extra_implementers": ["Deno", "Node.js"],
+    "readme": "README.md.anne.template-part"
   },
   "fetch": {
-    "extra_implementers": ["Deno (not for CORS changes)"]
+    "extra_implementers": ["Deno (not for CORS changes)"],
+    "readme": "README.md.anne.template-part"
   },
   "html": {
-    "only_these_templates": ["LICENSE", "PULL_REQUEST_TEMPLATE.md"],
+    "not_these_templates": [".editorconfig", ".gitattributes", ".github/workflows/build.yml", ".gitignore", ".pr-preview.json", "Makefile", "README.md"],
     "extra_implementers": [
       "Deno (only for timers, structured clone, base64 utils, channel messaging, module resolution, web workers, and web storage)",
       "Node.js (only for timers, structured clone, base64 utils, channel messaging, and module resolution)"
     ]
   },
   "infra": {
-    "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"]
+    "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"],
+    "readme": "README.md.anne.template-part"
+  },
+  "notifications": {
+    "readme": "README.md.anne.template-part"
+  },
+  "storage": {
+    ".gitignore": ["/node_modules/", "/package-lock.json"],
+    "extra_files": "assets/*",
+    "readme": "README.md.anne.template-part"
   },
   "streams": {
     "extra_files": "demos/* demos/**/*",
-    "not_these_templates": [".editorconfig"],
+    "not_these_templates": [".editorconfig", "README.md"],
     "extra_implementers": ["Deno", "Node.js"]
   },
   "url": {
-    "extra_implementers": ["Deno", "Node.js"]
+    "extra_implementers": ["Deno", "Node.js"],
+    "readme": "README.md.anne.template-part"
+  },
+  "urlpattern": {
+    "extra_implementers": [
+      "Deno",
+      "kenchris/urlpattern-polyfill"
+    ],
+    "bikeshed_indent_size": 2,
+    "bikeshed_max_line_length": "off"
   },
   "webidl": {
     ".gitignore": ["/node_modules/"],
+    "bikeshed_indent_size": 4,
     "build_with_node": true,
-    "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run pp-webidl -- --input \"$$DIR/index.html\"",
+    "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run webidl-grammar-post-processor -- --input \"$$DIR/index.html\"",
+    "not_these_templates": ["README.md"],
     "extra_implementers": ["Deno", "Node.js", "webidl2.js", "widlparser"]
   },
   "websockets": {
     "extra_implementers": ["Deno"]
+  },
+  "xhr": {
+    "readme": "README.md.anne.template-part"
   }
 }
