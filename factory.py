@@ -64,9 +64,9 @@ def fill_template(contents, variables):
             data = "\nmax_line_length = {}".format(data)
         elif variable == "build_with_node" and data != "":
             data = """
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: 18
+        node-version: 20
     - run: npm install"""
         elif variable == "post_build_step" and data != "":
             data = "\n\tPOST_BUILD_STEP='{}' \\".format(data)
