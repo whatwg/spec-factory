@@ -31,7 +31,7 @@
       "Deno (only for timers, structured clone, base64 utils, channel messaging, module resolution, web workers, and web storage)",
       "Node.js (only for timers, structured clone, base64 utils, channel messaging, and module resolution)"
     ],
-    "a11yi18n": true
+    "html-aam": true
   },
   "infra": {
     "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"],

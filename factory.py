@@ -80,10 +80,10 @@ def fill_template(contents, variables):
             for entry in data:
                 output += "\n   * {}: …".format(entry)
             data = output
-        elif variable == "a11yi18n":
+        elif variable == "html-aam":
             output = ""
             if data:
-                output = "\n- [ ] a11y & i18n are considered and relevant PRs are created:"
+                output = "\n- [ ] Corresponding [HTML AAM](https://w3c.github.io/html-aam/) issue or PR:"
             data = output
         contents = contents.replace("@@{}@@".format(variable), data)
     return contents
@@ -104,7 +104,7 @@ def update_files(shortname, name, in_main=False):
         ".gitignore": [],
         "not_these_templates": None,
         "extra_implementers": [],
-        "a11yi18n": False,
+        "html-aam": False,
         "readme": None
     }
     if shortname in FACTORY_DB:
