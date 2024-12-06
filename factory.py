@@ -83,7 +83,7 @@ def fill_template(contents, variables):
         elif variable == "html-aam":
             output = ""
             if data:
-                output = "\n- [ ] Corresponding [HTML AAM](https://w3c.github.io/html-aam/) issue or PR:"
+                output = "\n- [ ] Corresponding [HTML AAM](https://w3c.github.io/html-aam/) & [WAI-ARIA](https://w3c.github.io/aria/) issues & PRs:"
             data = output
         contents = contents.replace("@@{}@@".format(variable), data)
     return contents
