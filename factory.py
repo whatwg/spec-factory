@@ -80,6 +80,11 @@ def fill_template(contents, variables):
             for entry in data:
                 output += "\n   * {}: …".format(entry)
             data = output
+        elif variable == "a11y-check":
+            output = ""
+            if data:
+                output = "\n- [ ] Corresponding [HTML AAM](https://w3c.github.io/html-aam/) & [WAI-ARIA](https://w3c.github.io/aria/) issues & PRs:"
+            data = output
         contents = contents.replace("@@{}@@".format(variable), data)
     return contents
 
@@ -99,6 +104,7 @@ def update_files(shortname, name, in_main=False):
         ".gitignore": [],
         "not_these_templates": None,
         "extra_implementers": [],
+        "a11y-check": False,
         "readme": None
     }
     if shortname in FACTORY_DB:
