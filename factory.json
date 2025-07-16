@@ -63,7 +63,7 @@
     "bikeshed_max_line_length": "off"
   },
   "webidl": {
-    ".gitignore": ["/node_modules/"],
+    ".gitignore": ["/node_modules/", "/package-lock.json"],
     "bikeshed_indent_size": 4,
     "build_with_node": true,
     "post_build_step": "node ./check-grammar.js \"$$DIR/index.html\" && npm run webidl-grammar-post-processor -- --input \"$$DIR/index.html\"",
