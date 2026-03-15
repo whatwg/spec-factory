@@ -2,7 +2,7 @@
 
 import argparse, os, subprocess, uuid, json, requests
 
-OBSOLETE_FILES = [".travis.yml", "deploy_key.enc"]
+OBSOLETE_FILES = [".travis.yml", "deploy_key.enc", "PULL_REQUEST_TEMPLATE.md"]
 TEMPLATES = {}
 TEMPLATE_PARTS = {}
 DB = json.loads(requests.get("https://github.com/whatwg/sg/raw/main/db.json").text)
