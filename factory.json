@@ -26,7 +26,7 @@
     "readme": "README.md.anne.template-part"
   },
   "html": {
-    "not_these_templates": [".editorconfig", ".gitattributes", ".github/workflows/build.yml", ".gitignore", ".pr-preview.json", "Makefile", "README.md"],
+    "not_these_templates": [".editorconfig", ".gitattributes", ".github/CONTRIBUTING.md", ".github/workflows/build.yml", ".gitignore", ".pr-preview.json", "Makefile", "README.md"],
     "extra_implementers": [
       "Deno (only for timers, structured clone, base64 utils, channel messaging, module resolution, web workers, and web storage)",
       "Node.js (only for timers, structured clone, base64 utils, channel messaging, and module resolution)"
@@ -34,7 +34,7 @@
     "a11y-check": true
   },
   "infra": {
-    "not_these_templates": ["PULL_REQUEST_TEMPLATE.md"],
+    "not_these_templates": [".github/pull_request_template.md"],
     "readme": "README.md.anne.template-part"
   },
   "notifications": {
@@ -47,7 +47,7 @@
   },
   "streams": {
     "extra_files": "demos/* demos/**/*",
-    "not_these_templates": [".editorconfig", "README.md"],
+    "not_these_templates": [".editorconfig", ".github/CONTRIBUTING.md", "README.md"],
     "extra_implementers": ["Deno", "Node.js"]
   },
   "url": {
