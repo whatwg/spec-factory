@@ -62,6 +62,9 @@
     "bikeshed_indent_size": 2,
     "bikeshed_max_line_length": "off"
   },
+  "usb": {
+    "extra_files": "blocklist.txt"
+  },
   "webidl": {
     ".gitignore": ["/node_modules/", "/package-lock.json"],
     "bikeshed_indent_size": 4,
