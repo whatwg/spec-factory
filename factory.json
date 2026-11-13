@@ -25,6 +25,9 @@
     "extra_implementers": ["Deno (not for CORS changes)"],
     "readme": "README.md.anne.template-part"
   },
+  "hid": {
+    "extra_files": "blocklist.txt"
+  },
   "html": {
     "not_these_templates": [".editorconfig", ".gitattributes", ".github/CONTRIBUTING.md", ".github/workflows/build.yml", ".gitignore", ".pr-preview.json", "Makefile", "README.md"],
     "extra_implementers": [
@@ -39,6 +42,9 @@
   },
   "notifications": {
     "readme": "README.md.anne.template-part"
+  },
+  "serial": {
+    "extra_files": "bluetooth-service-blocklist.txt"
   },
   "storage": {
     ".gitignore": ["/node_modules/", "/package-lock.json"],
@@ -61,6 +67,9 @@
     ],
     "bikeshed_indent_size": 2,
     "bikeshed_max_line_length": "off"
+  },
+  "usb": {
+    "extra_files": "blocklist.txt"
   },
   "webidl": {
     ".gitignore": ["/node_modules/", "/package-lock.json"],
